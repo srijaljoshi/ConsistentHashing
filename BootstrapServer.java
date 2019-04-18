@@ -55,12 +55,21 @@ public class BootstrapServer {
   }
 
   public void insert(Integer key, String value) {
-
-    System.out.println("Inserted " + key + ": " + value + " successfully!");
+    if (!map.containsKey(key)) {
+      map.put(key, value);
+      System.out.println("Inserted " + key + ": " + value + " successfully!");
+    } else {
+      System.out.println("Entry already exists!");
+    }
   }
 
   public void delete(Integer key) {
-
+    if (map.containsKey(key)) {
+      map.remove(key);
+      System.out.println("Deleted " + key + " successfully!");
+    } else {
+      System.out.println("Entry doesn't exist!");
+    }
   }
 
   public void readfile(String config) {
@@ -132,6 +141,11 @@ public class BootstrapServer {
           key = cmdArray[1];
           value = cmdArray[2];
           insert(Integer.parseInt(key), value);
+          break;
+
+        case "delete":
+          key = cmdArray[1];
+          delete(Integer.parseInt(key));
           break;
 
         default:
